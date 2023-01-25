@@ -181,14 +181,13 @@ def run(
                         c = int(cls)  # integer class
 
                         label = None if hide_labels else (names[c] if hide_conf else f'{names[c]} {conf:.2f}')
-                     #   annotator.box_label(xyxy, label, color=colors(c, True))
-                        #coords
+                        #coords of bounding box
                         x1 = int(xyxy[0])
                         y1 = int(xyxy[1])
                         x2 = int(xyxy[2])
                         y2 = int(xyxy[3])
-                        h = y2-y1
-                        w = x2-x1
+                        h = y2-y1 # height of box
+                        w = x2-x1 # width of box
 
 
                         # convert img to gray for gamma correction
@@ -202,13 +201,17 @@ def run(
                         # do gamma correction
                         imcg = np.power(imc, gamma).clip(0, 255).astype(np.uint8)
 
-                        # Set up things for OpenCV to be annoying with
+                        # Set up things for OpenCV to be annoying with. Seriously, I hate the difference in channels with the alpha channel
                         roi = imcg[y1:y1 + h, x1:x1 + w]
                         final = imc[y1:y1 + h, x1:x1 + w]
 
+                        # convert to gray
                         gray = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
+                        # perform gaussian blur to make blur gray image
                         gray = cv2.GaussianBlur(gray, (23, 23), 3)
+                        # canny image
                         gray = cv2.Canny(gray, low_threshold, high_threshold, 3)
+                        # for bounding box
                         roi = np.zeros_like(roi)
                         roi[:, :, 0] = gray
                         roi[:, :, 1] = gray
@@ -218,14 +221,14 @@ def run(
                         # Output "lines" is an array containing endpoints of detected line segments
                         lines = cv2.HoughLinesP(gray, rho, theta, threshold, np.array([]),
                                                 min_line_length, max_line_gap)
+                        # double null check and draw lines
                         if lines is not None:
                             if len(lines):
                                 for line in lines:
                                     for xl1, yl1, xl2, yl2 in line:
                                         cv2.line(final, (xl1, yl1), (xl2, yl2), (255, 0, 0), 5)
 
-
-
+                        # place lines
                         imc[y1:y1 + roi.shape[0], x1:x1 + roi.shape[1]] = final
 
 
