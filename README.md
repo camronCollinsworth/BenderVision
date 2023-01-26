@@ -1,5 +1,10 @@
 # BenderVision
 
+
+
+You cant use this shit, don't try, it wont run
+
+
 Latest release of lane detection to be used on Bender
 
 To get started ensure that you have python 3 and pip then, clone the repo download the venv file from the Google Drive (BenderSoftware/VisionVenv). This would have been included in the repo, but the files are too large, furthemore, setting up a dedicated enviroment for this would be difficult.
