@@ -1,17 +1,19 @@
 # BenderVision
 
 
-
-You cant use this shit, don't try, it wont run
-
-
 Latest release of lane detection to be used on Bender
 
-To get started ensure that you have python 3 and pip then, clone the repo download the venv file from the Google Drive (BenderSoftware/VisionVenv). This would have been included in the repo, but the files are too large, furthemore, setting up a dedicated enviroment for this would be difficult.
+To get started ensure that you have python 3 and pip3 then, clone the repo. After that, give permissions to the install and run scripts with the following command:
+
+$ chmod 777 *.sh
+
+After that, make sure your system is up to date, then run the install script to install the necessary dependencies for the project:
+
+$ ./install.sh
+
+If the installation succeeds, then you are good to go. The installation was tested on Ubuntu 20.04 and MacOS. It should work on other distrobutions of linux as well. 
 
 The detect.py file contains the logic for lane detection. The usage is described very clearly within the file and some examples of usage 
-are provided in the run.sh script. This script has two useful examples of running the program. To run it, first grant permission, then execute the file:
-
-$ chmod +x run.sh
+are provided in the run.sh script. This script has two useful examples of running the program. To run it, execute the file:
 
 $ ./run.sh
