@@ -1,4 +1,4 @@
-pytorch==1.*
+torch==1.*
 pyyaml==5.*
 Pillow==7.*
 tqdm==4.*
