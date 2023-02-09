@@ -3,6 +3,8 @@
 
 Latest release of lane detection to be used on Bender
 
+You absolutely will get error messages. Just ignore them.
+
 To get started ensure that you have python 3 and pip3 then, clone the repo. After that, give permissions to the install and run scripts with the following command:
 
 $ chmod 777 *.sh
