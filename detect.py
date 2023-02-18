@@ -158,6 +158,8 @@ def run(
             s += '%gx%g ' % im.shape[2:]  # print string
             gn = torch.tensor(im0.shape)[[1, 0, 1, 0]]  # normalization gain whwh
             imc = im0.copy() if save_crop else im0  # for save_crop
+            fimc = np.copy(imc)*0
+
 
             annotator = Annotator(im0, line_width=line_thickness, example=str(names))
             if len(det):
@@ -203,7 +205,7 @@ def run(
 
                         # Set up things for OpenCV to be annoying with. Seriously, I hate the difference in channels with the alpha channel
                         roi = imcg[y1:y1 + h, x1:x1 + w]
-                        final = imc[y1:y1 + h, x1:x1 + w]
+                        final = imc[y1:y1 + h, x1:x1 + w] * 0
 
                         # convert to gray
                         gray = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
@@ -226,10 +228,10 @@ def run(
                             if len(lines):
                                 for line in lines:
                                     for xl1, yl1, xl2, yl2 in line:
-                                        cv2.line(final, (xl1, yl1), (xl2, yl2), (255, 0, 0), 5)
+                                        cv2.line(final, (xl1, yl1), (xl2, yl2), (255, 255, 255), 5)
 
                         # place lines
-                        imc[y1:y1 + roi.shape[0], x1:x1 + roi.shape[1]] = final
+                        fimc[y1:y1 + roi.shape[0], x1:x1 + roi.shape[1]] = final
 
 
                     # if save_crop:
@@ -250,7 +252,7 @@ def run(
             # Save results (image with detections)
             if save_img:
                 if dataset.mode == 'image':
-                    cv2.imwrite(save_path, im0)
+                    cv2.imwrite(save_path, fimc)
                 else:  # 'video' or 'stream'
                     if vid_path[i] != save_path:  # new video
                         vid_path[i] = save_path
